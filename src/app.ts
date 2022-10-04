@@ -20,13 +20,19 @@ const add = (a: number, b: number): number => a + b;
 yargs.command({
   command: "add",
   describe: "Add a note",
-  handler: function () {
-    console.log("KLyag");
+  builder: {
+    title: {
+      type: "string",
+      description: "The title of the note",
+    },
+  },
+  handler: function (elem) {
+    console.log("KLyag " + elem);
   },
 });
 
 yargs.command({
-  command: "remove",
+  command: ["remove", "Remove"],
   describe: "remove a note",
   handler: function () {
     console.log("remove");
@@ -34,7 +40,7 @@ yargs.command({
 });
 
 yargs.command({
-  command: "read",
+  command: ["read", "Read"],
   describe: "read a note",
   handler: function () {
     console.log("read");
@@ -49,7 +55,32 @@ yargs.command({
   },
 });
 
-console.log(yargs.argv);
+// console.log(yargs.argv);
+// yargs.parse();
+
+yargs.command({
+  command: "add",
+  describe: "Adds two number",
+  builder: {
+    firstNumber: {
+      describe: "First Number",
+      demandOption: true, // Required
+      type: "number",
+    },
+    secondNumber: {
+      describe: "Second Number",
+      demandOption: true,
+      type: "number",
+    },
+  },
+
+  // Function for your command
+  handler: function (argv) {
+    // console.log("Result:", argv.firstNumber + argv.secondNumber);
+  },
+});
+
+yargs.parse();
 
 app.get("/:text", (req: Request, res: Response, next: NextFunction) => {
   // const text: string = req.query.text as string; // when you get data from params
